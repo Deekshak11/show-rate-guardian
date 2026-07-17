@@ -1,0 +1,67 @@
+{
+  "client": {
+    "name": "Mixed Adapter Demo",
+    "slug": "mixed-adapter",
+    "timezone": "Europe/London"
+  },
+  "goal": {
+    "primary_metric": "booked_to_kept",
+    "target_lift": "20-30% relative"
+  },
+  "stack": {
+    "crm": "custom-crm-adapter",
+    "scheduler": "mixed-scheduler-adapter",
+    "calendar": "microsoft-365",
+    "sms": "twilio",
+    "email": "outlook",
+    "telephony": "custom-dialer"
+  },
+  "channels": {
+    "primary": [
+      "sms",
+      "email"
+    ],
+    "fallback": [
+      "phone",
+      "manual"
+    ]
+  },
+  "rules": {
+    "reminder_cadence": [
+      {
+        "timing": "48h",
+        "channels": [
+          "email"
+        ],
+        "purpose": "confirm"
+      },
+      {
+        "timing": "3h",
+        "channels": [
+          "sms"
+        ],
+        "purpose": "remind"
+      }
+    ],
+    "confirmation_required": true,
+    "reschedule_window": "allow until close of business on the previous day",
+    "working_hours": "09:00-17:30 operator timezone",
+    "no_show_grace_minutes": 15,
+    "timezone_policy": "store both scheduler timezone and operator timezone, prefer scheduler for customer-facing copy",
+    "escalation": "escalate to human router if adapters disagree on current event state"
+  },
+  "reporting": {
+    "metrics": [
+      "booked_to_kept",
+      "reschedule_rate",
+      "crm_sync_failures"
+    ]
+  },
+  "research": {
+    "official_sources": [
+      "https://learn.microsoft.com/graph/api/resources/event",
+      "https://www.twilio.com/docs/messaging",
+      "https://learn.microsoft.com/graph/api/resources/mail-api-overview"
+    ]
+  }
+}

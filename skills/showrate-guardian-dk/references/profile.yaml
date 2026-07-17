@@ -1,0 +1,90 @@
+{
+  "client": {
+    "name": "DK",
+    "slug": "dk",
+    "timezone": "Asia/Kolkata"
+  },
+  "goal": {
+    "primary_metric": "booked_to_kept",
+    "current_rate": "50%",
+    "target_rate": "90%+",
+    "target_lift": "80% relative (from 50% to 90%)",
+    "notes": "Currently 5/10 show up. Target: 8-9/10, ideal 10/10."
+  },
+  "stack": {
+    "crm": "custom",
+    "scheduler": "calendly",
+    "calendar": "google",
+    "sms": "gohighlevel",
+    "email": "gmail",
+    "telephony": "none",
+    "integrations": {
+      "crm_to_calendly": "webhook",
+      "sms_provider": "gohighlevel_api_with_webhook",
+      "tech_handler": "external_tech_guy"
+    }
+  },
+  "channels": {
+    "primary": [
+      "sms",
+      "email"
+    ],
+    "fallback": [
+      "manual"
+    ]
+  },
+  "rules": {
+    "reminder_cadence": [
+      {
+        "timing": "24h",
+        "channels": [
+          "email",
+          "sms"
+        ],
+        "purpose": "confirm_and_prep",
+        "message_style": "friendly_check_in"
+      },
+      {
+        "timing": "2h",
+        "channels": [
+          "sms"
+        ],
+        "purpose": "remind"
+      },
+      {
+        "timing": "15m",
+        "channels": [
+          "sms"
+        ],
+        "purpose": "final_nudge"
+      }
+    ],
+    "confirmation_required": true,
+    "confirmation_source": "calendly_booking_confirmation",
+    "reschedule_window": "allow until 2h before meeting",
+    "working_hours": "10:00-21:00 Asia/Kolkata",
+    "no_show_grace_minutes": 7,
+    "timezone_policy": "client booking timezone, display in IST",
+    "escalation": "manual fallback after second failed write"
+  },
+  "reporting": {
+    "metrics": [
+      "booked_to_kept",
+      "no_show_rate",
+      "reschedule_rate",
+      "reminder_response_rate"
+    ],
+    "recording_target": "custom_crm_via_webhook"
+  },
+  "research": {
+    "official_sources": [
+      "https://developer.calendly.com/",
+      "https://developers.gohighlevel.com/",
+      "https://developers.google.com/gmail/api"
+    ]
+  },
+  "deployment": {
+    "mode": "demo_read_only_first",
+    "notes": "Demo client to showcase ShowRate Guardian system capabilities."
+  }
+}

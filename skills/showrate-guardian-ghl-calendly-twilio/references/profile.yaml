@@ -1,0 +1,66 @@
+{
+  "client": {
+    "name": "GHL Calendly Twilio Demo",
+    "slug": "ghl-calendly-twilio",
+    "timezone": "Asia/Kolkata"
+  },
+  "goal": {
+    "primary_metric": "booked_to_kept",
+    "target_lift": "20-30% relative"
+  },
+  "stack": {
+    "crm": "gohighlevel",
+    "scheduler": "calendly",
+    "calendar": "google",
+    "sms": "twilio",
+    "email": "gmail",
+    "telephony": "none"
+  },
+  "channels": {
+    "primary": [
+      "sms",
+      "email"
+    ],
+    "fallback": [
+      "manual"
+    ]
+  },
+  "rules": {
+    "reminder_cadence": [
+      {
+        "timing": "24h",
+        "channels": [
+          "email"
+        ],
+        "purpose": "confirm"
+      },
+      {
+        "timing": "2h",
+        "channels": [
+          "sms"
+        ],
+        "purpose": "remind"
+      }
+    ],
+    "confirmation_required": true,
+    "reschedule_window": "allow until 2h before meeting",
+    "working_hours": "09:00-18:00 local closer time",
+    "no_show_grace_minutes": 10,
+    "timezone_policy": "booking timezone, fallback to closer timezone",
+    "escalation": "manual fallback after second failed write"
+  },
+  "reporting": {
+    "metrics": [
+      "booked_to_kept",
+      "no_show_rate",
+      "reschedule_rate"
+    ]
+  },
+  "research": {
+    "official_sources": [
+      "https://marketplace.gohighlevel.com/docs/",
+      "https://developer.calendly.com/",
+      "https://www.twilio.com/docs/messaging"
+    ]
+  }
+}

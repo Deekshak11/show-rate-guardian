@@ -1,0 +1,73 @@
+{
+  "client": {
+    "name": "HubSpot Calendly Twilio Demo",
+    "slug": "hubspot-calendly-twilio",
+    "timezone": "America/Vancouver"
+  },
+  "goal": {
+    "primary_metric": "no_show_rate",
+    "target_lift": "25-40% relative reduction"
+  },
+  "stack": {
+    "crm": "hubspot",
+    "scheduler": "calendly",
+    "calendar": "google",
+    "sms": "twilio",
+    "email": "gmail",
+    "telephony": "aircall"
+  },
+  "channels": {
+    "primary": [
+      "sms",
+      "email"
+    ],
+    "fallback": [
+      "manual"
+    ]
+  },
+  "rules": {
+    "reminder_cadence": [
+      {
+        "timing": "24h",
+        "channels": [
+          "email"
+        ],
+        "purpose": "confirm"
+      },
+      {
+        "timing": "4h",
+        "channels": [
+          "sms"
+        ],
+        "purpose": "remind"
+      },
+      {
+        "timing": "30m",
+        "channels": [
+          "sms"
+        ],
+        "purpose": "final-check"
+      }
+    ],
+    "confirmation_required": true,
+    "reschedule_window": "allow until 1h before meeting",
+    "working_hours": "08:00-17:00 local closer time",
+    "no_show_grace_minutes": 12,
+    "timezone_policy": "scheduler timezone wins unless the CRM owner timezone is explicit",
+    "escalation": "hand off to ops manager after failed CRM write or duplicate booking signal"
+  },
+  "reporting": {
+    "metrics": [
+      "no_show_rate",
+      "booked_to_kept",
+      "no_show_by_source"
+    ]
+  },
+  "research": {
+    "official_sources": [
+      "https://developers.hubspot.com/docs/api/overview",
+      "https://developer.calendly.com/",
+      "https://www.twilio.com/docs/messaging"
+    ]
+  }
+}
