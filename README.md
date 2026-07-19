@@ -1,73 +1,94 @@
 # Show-Rate Guardian
 
-**Agentic no-show reduction for B2B sales** — interview the operator’s stack, score risk, orchestrate multi-channel reminders and recovery. First product wedge of Signal OS / Agentic OS.
+**Agentic revenue protection at the meeting layer** — score no-show risk, pick channel and timing, follow up without a human babysitting every booking.
 
-| | |
-|---|---|
-| **Author** | [Deekshak SS](https://deekshak.site) |
-| **Portfolio** | [deekshak.site](https://deekshak.site) |
-| **Runtime history** | Hermes agent skills (runtime retired on my desk; skills preserved) |
+[![Portfolio](https://img.shields.io/badge/Portfolio-deekshak.site-0ea5e9?style=for-the-badge)](https://deekshak.site)
+[![Author](https://img.shields.io/badge/Author-Deekshak%20SS-1e293b?style=for-the-badge)](https://github.com/Deekshak11)
+
+> **Honest status:** This was a **shadow agent** (no consumer homepage). Runtime was Hermes-based and is **retired**. What remains is the **architecture, skills, and loop** as hire-facing proof — no fake product UI.
 
 ---
 
 ## Problem
 
-Booked meetings no-show. Generic reminders ignore **risk**, **lag-to-meeting**, and **channel**. Each miss burns pipeline revenue sales already tracks as **show rate**.
+Booked sales calls no-show. Generic reminders ignore risk, lag, lead source, and channel. Every miss is **protected revenue** already paid for in acquisition.
 
-## What it is
+## Agent loop
 
-A **shadow agent system** — not a consumer app:
-
+```text
+Calendar / booking event
+        │
+        ▼
+ Pull context (history, source, lag, completeness)
+        │
+        ▼
+ LLM risk score  ──►  high / med / low
+        │
+        ▼
+ Policy: channel + delay + intensity
+   (SMS / email / call-class paths)
+        │
+        ▼
+ Send reminder or offer reschedule
+        │
+        ▼
+ Write outcome → log / sheet
+        │
+        ▼
+ Human override if score ambiguous
 ```
-Booking event (CRM / Calendly / calendar)
-        ↓
-Context (lead, source, hours until meeting)
-        ↓
-Risk score + reasons (LLM, structured)
-        ↓
-Policy → channel + delay (SMS / email / multi-touch)
-        ↓
-Reminder | confirm CTA | reschedule path
-        ↓
-Log outcome (CRM / sheet) + recovery if no-show
+
+**Metric mapped:** show rate / protected meeting revenue — not “chatbot engagement.”
+
+---
+
+## Architecture
+
+```text
+┌──────────────┐     ┌─────────────────┐     ┌──────────────────┐
+│ Booking src  │ ──► │ Agent runtime   │ ──► │ Messaging APIs   │
+│ calendar     │     │ risk → action   │     │ SMS / email / …  │
+└──────────────┘     └────────┬────────┘     └──────────────────┘
+                              │
+                              ▼
+                     ┌─────────────────┐
+                     │ Run log / sheet │
+                     │ ops audit trail │
+                     └─────────────────┘
 ```
 
-The “UI” is the **prospect’s SMS/email** and the **ops log** — not a SaaS homepage.
+| Piece | Role |
+|-------|------|
+| Skills pack | Risk, channel policy, message drafting |
+| Adapters | Calendar / messaging integrations |
+| Logs | Decision + outcome for ops review |
+| Human path | Override when ambiguous |
 
-## What’s in this repo
+---
 
-| Path | Purpose |
-|------|---------|
-| `skills/showrate-guardian-factory/` | Factory skill: interviews operator, generates a client-specific runtime skill |
-| `skills/showrate-guardian-dk/` | Demo client skill (custom CRM + Calendly + GHL SMS style stack) |
-| `skills/showrate-guardian-hubspot-calendly-twilio/` | Adapter profile: HubSpot + Calendly + Twilio |
-| `skills/showrate-guardian-ghl-calendly-twilio/` | Adapter profile: GoHighLevel stack |
-| `skills/showrate-guardian-mixed-adapter/` | Mixed CRM/scheduler adapter |
-| `docs/consultant-prompt.md` | Full AI consultant interview + recommendation prompt |
-| `docs/architecture.md` | Decision policy sketch |
+## Repo layout
 
-## Factory pattern
+```text
+docs/           Architecture, consultant prompts
+skills/         Skill modules (Python / YAML / MD)
+scripts/        Helpers
+README.md
+```
 
-1. **Discover** — CRM, scheduler, SMS/email, timezone, reminder policy  
-2. **Analyze** — stack gaps, quick wins, full automation opportunity  
-3. **Generate** — client-specific skill / adapter config  
-4. **Run** — event-driven agent on Hermes (or any tool-using runtime)
+## Why no live demo URL
 
-This is how one “product” adapts to many operator stacks without rewriting core policy.
+There was never a single “open me” product screen. The UI was **calendar notifications and messages recipients already use**. After retiring Hermes, this repo is the portable proof.
 
-## Why no live product screenshot
-
-- No single public web UI for the core loop  
-- Hermes host for this project is retired / not the hire surface  
-- Real executions contain private calendar and lead data  
-
-Architecture + skills + consultant prompt **are** the proof.
+Portfolio explanation: [deekshak.site](https://deekshak.site) → Show-Rate Guardian (explained card).
 
 ## Related
 
-- [signal-os](https://github.com/Deekshak11/signal-os) — Mission Control / agentic infrastructure  
-- [agency-os](https://github.com/Deekshak11/agency-os) — outbound production factory  
+| Repo | Role |
+|------|------|
+| [signal-os](https://github.com/Deekshak11/signal-os) | Infra that hosted agent skills |
+| [business-os](https://github.com/Deekshak11/business-os) | Live multi-agent product |
+| [agency-os](https://github.com/Deekshak11/agency-os) | Outbound factory |
 
 ## License
 
-MIT for original skills and docs in this public snapshot.
+MIT for original code in this repository.
